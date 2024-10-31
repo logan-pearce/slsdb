@@ -41,7 +41,7 @@ def querySQL(string):
 # with st.form(key="slsdbsql"):
 #     st.text_input('SQL Query String', key='sqlquerystring')
 #     st.form_submit_button('Query', on_click=querySQL(session_state['sqlquerystring']))
-st.text_input(r"$\textsf{\LargeSQL Query String}$", key='sqlquerystring')
+st.text_input(r"$\textsf{\Large SQL Query String}$", key='sqlquerystring')
 
 session_state['db'] = slsdb
 
