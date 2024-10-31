@@ -7,6 +7,12 @@ from bokeh.io import curdoc
 
 from streamlit import session_state
 
+st.set_page_config(
+        page_title="SLSdb",
+        page_icon="",
+        layout="wide",
+    )
+
 
 st.title('Sirius-Like Systems Database')
 
