@@ -23,7 +23,7 @@ st.markdown(
 #st.dataframe(slsdb)
 
 ### SQL interface:
-conn = st.connection('/mount/src/slsdb/slsdb.db', type='sql')
+conn = st.connection('slsdb', type='sql', url='slsdb.db')
 
 # if "query" not in st.session_state:
 #     st.session_state.query = set()
