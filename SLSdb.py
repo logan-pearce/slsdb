@@ -19,12 +19,8 @@ st.markdown(
 
 #@st.cache_data
 #### Render the db:
-slsdb = pd.read_csv('slsdb.csv')
+#slsdb = pd.read_csv('slsdb.csv')
 #st.dataframe(slsdb)
-
-#st.sidebar.selectbox(label='Display Columns', index=None, options=slsdb.columns)
-
-
 
 ### SQL interface:
 conn = st.connection('slsdb', type='sql')
