@@ -1,6 +1,6 @@
 streamlit
 SQLAlchemy==2.0.27
 pandas
-numpy
+numpy==1.23.5
 matplotlib
 bokeh==2.4.3
