@@ -3,4 +3,4 @@ SQLAlchemy==2.0.27
 pandas
 numpy
 matplotlib
-bokehSQLAlchemy==2.0.27
+bokeh
