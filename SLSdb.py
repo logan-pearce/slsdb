@@ -19,7 +19,7 @@ st.markdown(
 
 #@st.cache_data
 #### Render the db:
-#slsdb = pd.read_csv('slsdb.csv')
+slsdb = pd.read_csv('slsdb.csv')
 #st.dataframe(slsdb)
 
 ### SQL interface:
