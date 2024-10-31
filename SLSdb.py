@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-np.bool = np.bool_
 from bokeh.plotting import figure
 from bokeh.io import curdoc
+from bokeh.palettes import Magma256, Viridis256
 
 from streamlit import session_state
 
@@ -27,26 +27,17 @@ st.markdown(
 #@st.cache_data
 #### Render the db:
 slsdb = pd.read_csv('slsdb.csv')
-#st.dataframe(slsdb)
+
+
 
 ### SQL interface:
 conn = st.connection('slsdb', type='sql', url = "sqlite:///slsdb.db")
 
-# if "query" not in st.session_state:
-#     st.session_state.query = set()
 
 def querySQL(string):
     session_state['db'] = conn.query(string)
     st.dataframe(session_state['db'])
 
-# def querySQL(string):
-#     q = conn.query(string)
-#     return q
-
-
-# with st.form(key="slsdbsql"):
-#     st.text_input('SQL Query String', key='sqlquerystring')
-#     st.form_submit_button('Query', on_click=querySQL(session_state['sqlquerystring']))
 st.text_input(r"$\textsf{\Large SQL Query String}$", key='sqlquerystring')
 
 session_state['db'] = slsdb
@@ -59,6 +50,60 @@ else:
     with st.form(key="slsdbsql"):
         st.form_submit_button('Query', on_click=querySQL(session_state['sqlquerystring']))
 
+
+
+
+### RA/DEC Plot::::
+from bokeh.models import LinearColorMapper, ColumnDataSource, LinearInterpolator, ColorBar
+from bokeh.transform import linear_cmap, log_cmap
+datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'], 
+                        'ploty':session_state['db']['dec_j2000'], 
+                        'WD':session_state['db']['wd_name'], 
+                        'MS':session_state['db']['ms_simbadable_name'], 
+                        'WDSpT':session_state['db']['wd_spt'],
+                        'Dist':np.array(1000/session_state['db']['plx']),
+                        'color': np.array(1000/session_state['db']['plx']),
+                        'markersize': session_state['db']['ms_gaia_g']
+                               })
+data=ColumnDataSource(data=datadf)
+
+dist = np.array(1000/session_state['db']['plx'])
+
+mapper = log_cmap(field_name='color', 
+                         palette=Viridis256,
+                         #palette=Turbo256[::-1],
+                         low=min(dist), high=max(dist),
+                        #low_color=Magma256[150], high_color=Magma256[200]
+                        )
+
+tools = "hover, zoom_in, zoom_out, save, undo, redo, pan"
+tooltips = [
+        ('WD', '@WD'),
+        ('MS', '@MS'),
+        ('WD SpT', '@WDSpT'),
+        ('Dist [pc]','@Dist{0.0}')
+    ]
+p = figure(x_axis_label='RA', y_axis_label='DEC',
+        background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
+        tools=tools, 
+        tooltips=tooltips, toolbar_location="above")
+p.yaxis.major_label_text_color = "#EEEEEE"
+p.yaxis.axis_label_text_color = "#EEEEEE"
+p.xaxis.major_label_text_color = "#EEEEEE"
+p.xaxis.axis_label_text_color = "#EEEEEE"
+p.grid.grid_line_color = '#EEEEEE'
+
+#p.circle(session_state['db']['ra_j2000'], session_state['db']['dec_j2000'], size=20, color="#76ABAE", alpha=0.7)
+p.circle('plotx','ploty', source=data, fill_alpha=0.6, size='markersize', 
+             line_color=mapper, color=mapper)
+color_bar = ColorBar(color_mapper=mapper['transform'], width=8, 
+                         location=(0,0), title="Distance",
+                        title_text_font_size = '12pt',
+                         major_label_text_font_size = '10pt',
+                         background_fill_color='#222831',major_label_text_color = "#EEEEEE",
+                         title_text_color = "#EEEEEE")
+p.add_layout(color_bar, 'right')
+st.bokeh_chart(p, use_container_width=False)
 
 
 ############# Visualize data:
