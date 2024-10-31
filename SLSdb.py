@@ -86,7 +86,7 @@ tooltips = [
 p = figure(x_axis_label='RA', y_axis_label='DEC',
         background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
         tools=tools, 
-        tooltips=tooltips, toolbar_location="above")
+        tooltips=tooltips, toolbar_location="above", width=800, height=400)
 p.yaxis.major_label_text_color = "#EEEEEE"
 p.yaxis.axis_label_text_color = "#EEEEEE"
 p.xaxis.major_label_text_color = "#EEEEEE"
@@ -103,7 +103,7 @@ color_bar = ColorBar(color_mapper=mapper['transform'], width=8,
                          background_fill_color='#222831',major_label_text_color = "#EEEEEE",
                          title_text_color = "#EEEEEE")
 p.add_layout(color_bar, 'right')
-st.bokeh_chart(p, use_container_width=False)
+st.bokeh_chart(p, use_container_width=True)
 
 
 ############# Visualize data:
