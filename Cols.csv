@@ -1,0 +1,75 @@
+Column Name,unit,Description
+wd_name,,"Name of the white dwarf component, of the form WD XXXX+/-XXX"
+ms_simbadable_name,,A Simbad-resolvable name for the main sequence star component
+disc_ref,,Reference for initial discovery
+disc_type,,Type of discovery: img: discovered in imaging; phot: discovered through photometric colors; astr: discovered via astrometry; spec: discovered spectroscopically
+note,,Notes for things such as: included in the Holberg2013 sample
+resolved,,Have the two components been resolved in imaging?
+resolved_ref,,Reference for imaging
+confirmed,,Have the two componenets been confirmed as bound?
+confirmed_ref,,Reference for comfirmation
+wd_gaia_sourceid,,Gaia source id for WD
+ms_gaia_sourceid,,Gaia source if for MS
+plx,mas,System parallax
+plx_err,mas,Parallax error
+ra_j2000,deg,J2000 right ascension
+ra_j2000_err,mas,RA error
+dec_j2000,deg,J2000 declination
+dec_j2000_err,mas,Dec error
+plx_coord_source,,Source of parallax and ra/dec
+wd_vmag,,
+wd_gaia_g,,
+ms_vmag,,
+ms_gaia_g,,
+n_sys_components,,"Number of known stellar components in the system. If more than two, use the primary star as the MS component for above and below info"
+wd_ms_sep_au,au,WD-MS star separation in au
+wd_ms_sep_as,arcsec,Separation in as
+wd_ms_pa,deg,Position angle east of north for WD relative to MS
+sep_pa_date,decimal year,Date for separation and PA
+sep_pa_ref,,
+wd_spt,,WD Spectral type
+wd_teff,K,WD effective temperature
+wd_logg,cm/s^2,WD log(g)
+wd_mass,Msun,WD mass
+wd_mass_err,Msun,Uncertainty on WD mass
+dyn_mass,,Does the WD have a dynamical mass estimate
+wd_radius,Rsun,WD radius
+wd_cooling_age,Gyr,WD cooling age
+wd_cooling_age_plus,,uncertainty on WD age plus value
+wd_cooling_age_minus,,uncertainty on WD age minus value
+wd_properties_refs,,References for above properties
+ms_spt,,MS star spectral type
+ms_teff,K,MS effective temp
+ms_logg,cm/s^2,MS log(g)
+ms_mass,Msun,MS mass
+ms_radius,Rsun,MS radius
+ms_age,Gyr,MS age
+ms_age_plus,Gyr,uncertainty on MS age plus value
+ms_age_minus,Gyr,uncertainty on MS age minus value
+ms_properties_refs,,References for above properties
+wd_known_polluted,,"Is the WD known to be polluted? Y = yes, N = no, U = has not been observed for pollution"
+pollution_ref,,Reference for pollution
+has_orbit,,
+sma,au,If orbit of WD+MS is known: semi-major axis
+sma_err_plus,au,sma uncertainty plus value (i.e sma +xx/-yy)
+sma_err_minus,au,sma uncertainty minus value (i.e sma +xx/-yy)
+per,yr,Period
+per_err_plus,yr,period uncertainty plus value
+per_err_minus,yr,period uncertainty minus value
+ecc,,Eccentricity
+ecc_err_plus,,eccentricity uncertainty plus value
+ecc_err_minus,,eccentricity uncertainty minus value
+inc,deg,Inclination
+inc_err_plus,deg,inclination uncertainty plus value
+inc_err_minus,deg,inclination uncertainty minus value
+argp,deg,Argument of Periastron
+argp_err_plus,deg,argp uncertainty plus value
+argp_err_minus,deg,argp uncertainty minus value
+lon,deg,Longitude of Nodes
+lon_err_plus,deg,lon uncertainty plus value
+lon_err_minus,deg,lon uncertainty minus value
+t0,yr,Time of Periastron Passage in decimal year
+t0_err_plus,yr,t0 uncertainty plus value
+t0_err_minus,yr,t0 uncertainty minus value
+error_format,,"Type of distribution described by uncertanties on parameters. Ex: 68% CI, Gaussian"
+orbit_params_ref,,Reference for orbital params
