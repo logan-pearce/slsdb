@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+np.bool = np.bool_
 from bokeh.plotting import figure
 from bokeh.io import curdoc
 
