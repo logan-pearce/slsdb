@@ -3,4 +3,4 @@ SQLAlchemy==2.0.27
 pandas
 numpy
 matplotlib
-bokeh
+bokeh==2.4.3
