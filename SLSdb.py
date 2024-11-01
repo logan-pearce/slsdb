@@ -54,8 +54,9 @@ else:
 
 
 ### RA/DEC Plot::::
-from bokeh.models import LinearColorMapper, ColumnDataSource, LinearInterpolator, ColorBar
+from bokeh.models import LinearColorMapper, ColumnDataSource, LinearInterpolator, ColorBar, Label
 from bokeh.transform import linear_cmap, log_cmap
+multiplier = 100
 datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'], 
                         'ploty':session_state['db']['dec_j2000'], 
                         'WD':session_state['db']['wd_name'], 
@@ -64,7 +65,7 @@ datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'],
                         'Dist':np.array(1000/session_state['db']['plx']),
                         'MSG':session_state['db']['ms_gaia_g'],
                         'color': np.array(1000/session_state['db']['plx']),
-                        'markersize': 1/np.array(session_state['db']['ms_gaia_g'])
+                        'markersize': (1/np.array(session_state['db']['ms_gaia_g'])) * multiplier 
                                })
 data=ColumnDataSource(data=datadf)
 
@@ -95,7 +96,7 @@ p.xaxis.major_label_text_color = "#EEEEEE"
 p.xaxis.axis_label_text_color = "#EEEEEE"
 p.grid.grid_line_color = '#EEEEEE'
 
-#p.circle(session_state['db']['ra_j2000'], session_state['db']['dec_j2000'], size=20, color="#76ABAE", alpha=0.7)
+
 p.circle('plotx','ploty', source=data, fill_alpha=0.6, size='markersize', 
              line_color=mapper, color=mapper)
 color_bar = ColorBar(color_mapper=mapper['transform'], width=8, 
@@ -105,10 +106,11 @@ color_bar = ColorBar(color_mapper=mapper['transform'], width=8,
                          background_fill_color='#222831',major_label_text_color = "#EEEEEE",
                          title_text_color = "#EEEEEE")
 p.add_layout(color_bar, 'right')
+#st.text('Marker size corresponds to MS g magnitude; marker color corresponds to distance')
 st.bokeh_chart(p, use_container_width=True)
 
 
-############# Visualize data:
+############# Visualize data:::::::
 st.title('Data Viz')
 
 '''## Scatter Plot'''
