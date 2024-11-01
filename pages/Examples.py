@@ -12,6 +12,9 @@ st.set_page_config(
         layout="wide",
     )
 
+sidebar_logo = 'images/slsdb-logo-3.png'
+st.logo(sidebar_logo, size='large')
+
 '''## Querying the slsdb with SQL
 
 SQL is a language for selecting specific elements from a database. After entering a query in the text box, the SLSdb app will display the results and everything on the main page will update to use only the results from the query. To return to the whole database, reload the page.

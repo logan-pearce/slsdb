@@ -19,6 +19,16 @@ import numpy as np
 # sheetid = '169q8SLAi6ujjjPr-x-hiTd4SA4ZVBSu3BubUYxqVHzg'
 # refs = GetSheet(sheet_id = sheetid, sheet_name = sheetname)
 # refs.to_csv('refs.csv', index=False)
+
+st.set_page_config(
+        page_title="SLSdb",
+        page_icon="images/slsdb-logo-3.png",
+        layout="wide",
+    )
+
+sidebar_logo = 'images/slsdb-logo-3.png'
+st.logo(sidebar_logo, size='large')
+
 refs = pd.read_csv('refs.csv')
 
 st.dataframe(refs)
