@@ -9,11 +9,16 @@ from streamlit import session_state
 
 st.set_page_config(
         page_title="SLSdb",
-        page_icon="",
+        page_icon="images/slsdb-logo-3.png",
         layout="wide",
     )
 
+sidebar_logo = 'images/slsdb-logo-3.png'
+st.logo(sidebar_logo, size='large')
 
+left_co, cent_co,last_co = st.columns(3)
+with cent_co:
+    st.image('images/slsdb-logo.png', width=300)
 st.title('Sirius-Like Systems Database')
 
 st.markdown(
