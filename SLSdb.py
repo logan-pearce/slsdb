@@ -64,7 +64,7 @@ datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'],
                         'Dist':np.array(1000/session_state['db']['plx']),
                         'MSG':session_state['db']['ms_gaia_g'],
                         'color': np.array(1000/session_state['db']['plx']),
-                        'markersize': session_state['db']['ms_gaia_g']
+                        'markersize': 1/np.array(session_state['db']['ms_gaia_g'])
                                })
 data=ColumnDataSource(data=datadf)
 
