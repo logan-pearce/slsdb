@@ -71,7 +71,7 @@ data=ColumnDataSource(data=datadf)
 dist = np.array(1000/session_state['db']['plx'])
 
 mapper = log_cmap(field_name='color', 
-                         palette=Viridis256,
+                         palette=Viridis256[::-1],
                          #palette=Turbo256[::-1],
                          low=min(dist), high=max(dist),
                         #low_color=Magma256[150], high_color=Magma256[200]
