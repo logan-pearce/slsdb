@@ -83,7 +83,7 @@ tooltips = [
         ('MS', '@MS'),
         ('WD SpT', '@WDSpT'),
         ('Dist [pc]','@Dist{0.0}'),
-        ('MS Gaia g','@MSG')
+        ('MS Gaia g','@MSG{0.0}')
     ]
 p = figure(x_axis_label='RA', y_axis_label='DEC',
         background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
