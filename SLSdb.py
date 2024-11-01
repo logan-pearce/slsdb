@@ -62,6 +62,7 @@ datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'],
                         'MS':session_state['db']['ms_simbadable_name'], 
                         'WDSpT':session_state['db']['wd_spt'],
                         'Dist':np.array(1000/session_state['db']['plx']),
+                        'MSG':session_state['db']['ms_gaia_g'],
                         'color': np.array(1000/session_state['db']['plx']),
                         'markersize': session_state['db']['ms_gaia_g']
                                })
@@ -81,7 +82,8 @@ tooltips = [
         ('WD', '@WD'),
         ('MS', '@MS'),
         ('WD SpT', '@WDSpT'),
-        ('Dist [pc]','@Dist{0.0}')
+        ('Dist [pc]','@Dist{0.0}'),
+        ('MS Gaia g','@MSG')
     ]
 p = figure(x_axis_label='RA', y_axis_label='DEC',
         background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
