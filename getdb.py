@@ -17,10 +17,11 @@ def GetSheet(sheet_id='1rD4aVpD57SQuPR8f2cqb2IJT67KlOg9NNnOu0lbUqGg',
     return p
 
 
-sheetname = 779696648
-sheetid = '169q8SLAi6ujjjPr-x-hiTd4SA4ZVBSu3BubUYxqVHzg'
-slsdb = GetSheet(sheet_id = sheetid, sheet_name = sheetname)
-slsdb.to_csv('slsdb.csv', index=False)
+# sheetname = 779696648
+# sheetid = '169q8SLAi6ujjjPr-x-hiTd4SA4ZVBSu3BubUYxqVHzg'
+# slsdb = GetSheet(sheet_id = sheetid, sheet_name = sheetname)
+# slsdb.to_csv('slsdb.csv', index=False)
+slsdb = pd.read_csv('slsdb.csv')
 
 import sqlite3
 conn = sqlite3.connect('slsdb.db')

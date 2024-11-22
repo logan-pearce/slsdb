@@ -33,6 +33,9 @@ st.markdown(
 #### Render the db:
 slsdb = pd.read_csv('slsdb.csv')
 
+import sqlite3
+conn = sqlite3.connect('slsdb.db')
+slsdb.to_sql('slsdb.db',conn,index=False, if_exists='append')
 
 
 ### SQL interface:
