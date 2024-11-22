@@ -32,6 +32,7 @@ st.markdown(
 #@st.cache_data
 #### Render the db:
 slsdb = pd.read_csv('slsdb.csv')
+st.write(np.where(type(slsdb['plx']) == str))
 
 import sqlite3
 conn = sqlite3.connect('slsdb.db')
