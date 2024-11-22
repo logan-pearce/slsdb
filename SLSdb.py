@@ -32,7 +32,6 @@ st.markdown(
 #@st.cache_data
 #### Render the db:
 slsdb = pd.read_csv('slsdb.csv')
-st.write(np.where(type(slsdb['plx']) == str))
 
 import sqlite3
 conn = sqlite3.connect('slsdb.db')
@@ -61,6 +60,7 @@ else:
 
 
 
+st.write(np.where(type(session_state['db']['plx']) == str))
 
 ### RA/DEC Plot::::
 from bokeh.models import LinearColorMapper, ColumnDataSource, LinearInterpolator, ColorBar, Label
