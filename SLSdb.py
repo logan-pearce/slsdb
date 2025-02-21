@@ -33,6 +33,16 @@ st.markdown(
 #### Render the db:
 slsdb = pd.read_csv('slsdb.csv')
 
+plotcols = ("plx", "plx_err", "ra_j2000", "ra_j2000_err", "dec_j2000", "dec_j2000_err", "wd_vmag", "wd_gaia_g", "ms_vmag", "ms_gaia_g", "n_sys_components", "wd_ms_sep_au", "wd_ms_sep_as", "wd_ms_pa", "wd_spt", "wd_teff", "wd_logg", "wd_mass", "wd_mass_err", "wd_radius", "wd_cooling_age", "wd_cooling_age_plus", "wd_cooling_age_minus", "ms_spt", "ms_teff", "ms_logg", "ms_mass", "ms_radius", "ms_age", "ms_age_plus", "ms_age_minus", "sma", "sma_err_plus", "sma_err_minus", "per", "per_err_plus", "per_err_minus", "ecc", "ecc_err_plus", "ecc_err_minus", "inc", "inc_err_plus", "inc_err_minus", "argp", "argp_err_plus", "argp_err_minus", "lon", "lon_err_plus", "lon_err_minus", "t0", "t0_err_plus", "t0_err_minus")
+for col in plotcols:
+    slsdb.loc[np.where(slsdb[col] == '--')[0],col] = np.nan
+
+slsdb.loc[np.where(slsdb['ra_j2000'] == '--')[0],'ra_j2000'] = np.nan
+slsdb.loc[np.where(slsdb['dec_j2000'] == '--')[0],'dec_j2000'] = np.nan
+slsdb.loc[np.where(slsdb['plx'] == '--')[0],'plx'] = np.nan
+slsdb.loc[np.where(slsdb['ms_gaia_g'] == '--')[0],'ms_gaia_g'] = np.nan
+
+
 import sqlite3
 conn = sqlite3.connect('slsdb.db')
 slsdb.to_sql('slsdb.db',conn,index=False, if_exists='append')
@@ -60,25 +70,28 @@ else:
 
 
 
-st.write(np.where(type(session_state['db']['plx']) == str))
-
 ### RA/DEC Plot::::
 from bokeh.models import LinearColorMapper, ColumnDataSource, LinearInterpolator, ColorBar, Label
 from bokeh.transform import linear_cmap, log_cmap
+
 multiplier = 100
-datadf = pd.DataFrame(data={'plotx':session_state['db']['ra_j2000'], 
-                        'ploty':session_state['db']['dec_j2000'], 
+st.text('Marker size corresponds to MS g magnitude; marker color corresponds to distance')
+
+datadf = pd.DataFrame(data={'plotx':np.array(session_state['db']['ra_j2000'],dtype=float), 
+                        'ploty':np.array(session_state['db']['dec_j2000'], dtype=float), 
                         'WD':session_state['db']['wd_name'], 
                         'MS':session_state['db']['ms_simbadable_name'], 
                         'WDSpT':session_state['db']['wd_spt'],
-                        'Dist':np.array(1000/session_state['db']['plx']),
+                        'Dist':np.array(1000/np.array(session_state['db']['plx'], dtype=float)),
                         'MSG':session_state['db']['ms_gaia_g'],
-                        'color': np.array(1000/session_state['db']['plx']),
-                        'markersize': (1/np.array(session_state['db']['ms_gaia_g'])) * multiplier 
+                        'color': np.array(1000/np.array(session_state['db']['plx'], dtype=float)),
+                        'markersize': (1/np.array(session_state['db']['ms_gaia_g'], dtype=float)) * multiplier 
                                })
+
 data=ColumnDataSource(data=datadf)
 
-dist = np.array(1000/session_state['db']['plx'])
+dist = np.array(1000/np.array(session_state['db']['plx'], dtype=float))
+
 
 mapper = log_cmap(field_name='color', 
                          palette=Viridis256[::-1],
@@ -99,15 +112,16 @@ p = figure(x_axis_label='RA', y_axis_label='DEC',
         background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
         tools=tools, 
         tooltips=tooltips, toolbar_location="above", width=800, height=400)
+
 p.yaxis.major_label_text_color = "#EEEEEE"
 p.yaxis.axis_label_text_color = "#EEEEEE"
 p.xaxis.major_label_text_color = "#EEEEEE"
 p.xaxis.axis_label_text_color = "#EEEEEE"
 p.grid.grid_line_color = '#EEEEEE'
 
-
-p.circle('plotx','ploty', source=data, fill_alpha=0.6, size='markersize', 
+p.scatter('plotx','ploty', source=data, fill_alpha=0.6, size='markersize', 
              line_color=mapper, color=mapper)
+
 color_bar = ColorBar(color_mapper=mapper['transform'], width=8, 
                          location=(0,0), title="Distance",
                         title_text_font_size = '12pt',
@@ -115,7 +129,6 @@ color_bar = ColorBar(color_mapper=mapper['transform'], width=8,
                          background_fill_color='#222831',major_label_text_color = "#EEEEEE",
                          title_text_color = "#EEEEEE")
 p.add_layout(color_bar, 'right')
-#st.text('Marker size corresponds to MS g magnitude; marker color corresponds to distance')
 st.bokeh_chart(p, use_container_width=True)
 
 
@@ -147,8 +160,9 @@ with col2:
 
 
 chart_data = pd.DataFrame()
-chart_data['x'] = session_state['db'][plotx]
-chart_data['y'] = session_state['db'][ploty]
+
+chart_data['x'] = np.array(session_state['db'][plotx],dtype=float)
+chart_data['y'] = np.array(session_state['db'][ploty],dtype=float)
 chart_data['color'] = session_state['db']['wd_mass']
 chart_data['size'] = session_state['db']['ms_mass']
 xlabel = plotx
@@ -177,7 +191,7 @@ bins = st.select_slider('Bins',key='bins',options=[10,25,50,100,500,1000])
 x_axis_type_hist = st.radio("X axis", ['linear','log'], key='x_axis_type_hist')
 
 xlabel = plothist
-data = np.array(session_state['db'][plothist])
+data = np.array(session_state['db'][plothist], dtype=float)
 data = data[~np.isnan(data)]
 phist = figure(x_axis_label=plothist,
         background_fill_color='#222831', border_fill_color='#31363F',outline_line_color='#31363F',
